@@ -1,5 +1,5 @@
-const int MOTOR_SPEED = 50;
-const int SENSOR_TRESHOLD = 400; 
+const int MOTOR_SPEED = 240;
+const int SENSOR_TRESHOLD = 600; 
 const int SENSOR_TRIALS = 3;
 
 struct Motor {
@@ -23,8 +23,8 @@ struct Sensor {
 //  int ringBuffer[SENSOR_TRIALS];
   
   int value;
-  boolean lineDetected = true;
-  boolean stateChanged = true;
+  boolean lineDetected = false;                   //было true
+  boolean stateChanged = false;                   //было true
 };
 
 struct Sonar {
@@ -77,13 +77,13 @@ void setupMotors() {
 
 
 void setupSensors() {
-  leftSensor.pin = A15;
-  rightSensor.pin = A9;
+  leftSensor.pin = A15;             
+  rightSensor.pin = A9;             
 }
 
-void loop() {
-  refreshSensor(leftSensor);
-  refreshSensor(rightSensor);
+                                              void loop() {
+//  refreshSensor(leftSensor);
+//  refreshSensor(rightSensor);
 
   Serial.print(leftSensor.value);
   Serial.print(" --- ");
@@ -91,8 +91,8 @@ void loop() {
   
   strategy();
 
-  refreshMotor(leftMotor);
-  refreshMotor(rightMotor);
+//  refreshMotor(leftMotor);
+//  refreshMotor(rightMotor);
 }
 
 void refreshSensor(Sensor& sensor) {
@@ -100,7 +100,7 @@ void refreshSensor(Sensor& sensor) {
 
 //  sensor.ringBuffer[sensor.i] = analogRead(sensor.pin);
 //  sensor.i = (sensor.i + 1) % SENSOR_TRIALS;
-
+//
 //  sensor.value = 0;
 //  for (int i  = 0; i < SENSOR_TRIALS; i++) {
 //    sensor.value += sensor.ringBuffer[i];
@@ -108,11 +108,10 @@ void refreshSensor(Sensor& sensor) {
 //  sensor.value = sensor.value / SENSOR_TRIALS;
   
   
-  boolean newState = sensor.value > SENSOR_TRESHOLD;    
-
+  boolean newState = sensor.value > SENSOR_TRESHOLD;   
   sensor.stateChanged = sensor.lineDetected ^ newState;
-  
   sensor.lineDetected = newState;
+    
 }
 
 

@@ -14,24 +14,23 @@ void strategy() {
     case SEARCH_TARGET:
       refreshSonar(sonar);
 
-      if (sonar.distance < 110) {
+      if (sonar.distance < 75) {                //было 110
         stright();
         state = ATTACK;
+        delay(300);
       }
         
       break;
 
     case ATTACK:
+      
       refreshSensor(leftSensor);
       refreshSensor(rightSensor);
-  
+
       refreshSonar(sonar);
       
       if (leftSensor.lineDetected || rightSensor.lineDetected) {
-        stop();
-        delay(400);
-
-        if (leftSensor.lineDetected || rightSensor.lineDetected) {
+          stop();
           reverse();
           delay(400);
           turnRight();
@@ -39,7 +38,7 @@ void strategy() {
           
           state = SEARCH_TARGET;
         }
-      }  
+        
            
       break;
   }

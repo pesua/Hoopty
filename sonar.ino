@@ -1,4 +1,3 @@
-
 void setup(Sonar& sonar) {
   pinMode(sonar.trigPin, OUTPUT);
   pinMode(sonar.echoPin, INPUT);

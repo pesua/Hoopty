@@ -1,4 +1,3 @@
-
 void setup(Motor motor) {
   pinMode(motor.en, OUTPUT);
   pinMode(motor.pwm, OUTPUT);
@@ -53,7 +52,7 @@ void changeSpeed(Motor& motor, int speed) {
       digitalWrite(motor.counterClockwiseDir, HIGH);
     }
     
-    motor.currentPower = 150;
+    motor.currentPower = abs(speed);                         //было 150
     motor.targetPower = min(abs(speed), 255);
     updateMotorPower(motor);
   }
@@ -62,4 +61,3 @@ void changeSpeed(Motor& motor, int speed) {
 void updateMotorPower(Motor& motor) {
     analogWrite(motor.pwm, motor.currentPower);
 }
-

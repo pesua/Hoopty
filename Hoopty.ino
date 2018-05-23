@@ -1,5 +1,5 @@
-const int MOTOR_SPEED = 240;
-const int SENSOR_TRESHOLD = 600; 
+const int MOTOR_SPEED = 65;
+const int SENSOR_TRESHOLD = 250; 
 const int SENSOR_TRIALS = 3;
 
 struct Motor {
@@ -39,6 +39,8 @@ Motor rightMotor;
 
 Sensor leftSensor;
 Sensor rightSensor;
+Sensor leftMostSensor;
+Sensor rightMostSensor;
 
 Sonar sonar;
 
@@ -77,8 +79,10 @@ void setupMotors() {
 
 
 void setupSensors() {
-  leftSensor.pin = A15;             
-  rightSensor.pin = A9;             
+  leftMostSensor.pin = A9;
+  leftSensor.pin = A11;             
+  rightSensor.pin = A12;
+  rightMostSensor.pin = A13;             
 }
 
                                               void loop() {
@@ -89,7 +93,7 @@ void setupSensors() {
   Serial.print(" --- ");
   Serial.println(rightSensor.value);
   
-  strategy();
+  strategyFollow();
 
 //  refreshMotor(leftMotor);
 //  refreshMotor(rightMotor);
@@ -115,25 +119,3 @@ void refreshSensor(Sensor& sensor) {
 }
 
 
-//  if (leftSensor.stateChanged || rightSensor.stateChanged) {
-//
-//    if (leftSensor.lineDetected && rightSensor.lineDetected) {
-//      stop();
-//    } else if (rightSensor.lineDetected) {
-//      stop();
-////      turnLeft();
-//    } else if (leftSensor.lineDetected) {
-//      stop();
-////      turnRight();
-//    } else {
-////      stright();
-//
-//      if (sonar.distance < 110) {
-//    
-//        stright();
-//      } else {
-//        
-//        turnLeft();
-//      }
-//    }  
-//  }

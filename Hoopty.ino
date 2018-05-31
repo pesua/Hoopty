@@ -1,7 +1,7 @@
 ////SUMO
 
-const int MOTOR_SPEED = 50;
-const int SENSOR_TRESHOLD = 400; 
+const int MOTOR_SPEED = 150;
+const int SENSOR_TRESHOLD = 700; 
 const int SENSOR_TRIALS = 3;
 
 struct Motor {
@@ -79,13 +79,13 @@ void setupMotors() {
 
 
 void setupSensors() {
-  leftSensor.pin = A15;
+  leftSensor.pin = A13;
   rightSensor.pin = A9;
 }
 
 void loop() {
-  refreshSensor(leftSensor);
-  refreshSensor(rightSensor);
+  //refreshSensor(leftSensor);
+  //refreshSensor(rightSensor);
 
   Serial.print(leftSensor.value);
   Serial.print(" --- ");
@@ -93,8 +93,8 @@ void loop() {
   
   strategy();
 
-  refreshMotor(leftMotor);
-  refreshMotor(rightMotor);
+  //refreshMotor(leftMotor);
+  //refreshMotor(rightMotor);
 }
 
 void refreshSensor(Sensor& sensor) {

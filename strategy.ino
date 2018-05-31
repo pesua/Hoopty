@@ -17,6 +17,7 @@ void strategy() {
       if (sonar.distance < 110) {
         stright();
         state = ATTACK;
+        delay(200);
       }
         
       break;

@@ -1,3 +1,5 @@
+////SUMO
+
 const int MOTOR_SPEED = 50;
 const int SENSOR_TRESHOLD = 400; 
 const int SENSOR_TRIALS = 3;

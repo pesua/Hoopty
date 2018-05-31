@@ -2,6 +2,14 @@ const int MOTOR_SPEED = 240;
 const int SENSOR_TRESHOLD = 600; 
 const int SENSOR_TRIALS = 3;
 
+#define s1 A8 
+#define s2 A9 
+#define s3 A10 
+#define s4 A11
+#define s5 A12 
+#define s6 A13
+#define s7 A14
+
 struct Motor {
   // config
   int en;
@@ -40,6 +48,9 @@ Motor rightMotor;
 Sensor leftSensor;
 Sensor rightSensor;
 
+Sensor sensors[6];
+int sensorPins[] = {A13, A14, A10, A12, A8, A9};
+
 Sonar sonar;
 
 void setup() {
@@ -77,19 +88,32 @@ void setupMotors() {
 
 
 void setupSensors() {
-  leftSensor.pin = A15;             
-  rightSensor.pin = A9;             
+  leftSensor.pin = s1;             
+  rightSensor.pin = s2;     
+  for(int i = 0; i < 6; i++){
+    sensors[i].pin = sensorPins[i];
+  }
 }
 
-                                              void loop() {
+void refreshSensors(){
+  for(int i = 0; i < 6; i++){
+    refreshSensor(sensors[i]);
+  }
+}
+
+void loop() {
 //  refreshSensor(leftSensor);
 //  refreshSensor(rightSensor);
 
-  Serial.print(leftSensor.value);
-  Serial.print(" --- ");
-  Serial.println(rightSensor.value);
+  refreshSensors();
   
-  strategy();
+  for(int i = 0; i < 6; i++){
+    Serial.print(sensors[i].value);
+    Serial.print(" --- ");
+  }  
+  Serial.println(" ");
+//  stright();
+//  strategy();
 
 //  refreshMotor(leftMotor);
 //  refreshMotor(rightMotor);

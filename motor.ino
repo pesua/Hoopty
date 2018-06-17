@@ -1,4 +1,3 @@
-
 void setup(Motor motor) {
   pinMode(motor.en, OUTPUT);
   pinMode(motor.pwm, OUTPUT);
@@ -13,9 +12,29 @@ void refreshMotor(Motor& motor) {
   }
 }
 
+void right10() {
+  changeSpeed(rightMotor, MOTOR_SPEED + 100);
+  changeSpeed(leftMotor, -MOTOR_SPEED + 70);
+}
+
+void right20() {
+  changeSpeed(rightMotor, MOTOR_SPEED + 150);
+  changeSpeed(leftMotor, -MOTOR_SPEED + 100);
+}
+
+void left10() {
+  changeSpeed(rightMotor, MOTOR_SPEED - 70);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 100);
+}
+
+void left20() {
+  changeSpeed(rightMotor, MOTOR_SPEED - 100);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 154);
+}
+
 void stright() {
-  changeSpeed(rightMotor, MOTOR_SPEED);
-  changeSpeed(leftMotor, -MOTOR_SPEED);
+  changeSpeed(rightMotor, MOTOR_SPEED + 130);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 130);
 }
 
 void reverse() {
@@ -53,7 +72,7 @@ void changeSpeed(Motor& motor, int speed) {
       digitalWrite(motor.counterClockwiseDir, HIGH);
     }
     
-    motor.currentPower = 150;
+    motor.currentPower = min(abs(speed), 255);                       //было 150
     motor.targetPower = min(abs(speed), 255);
     updateMotorPower(motor);
   }
@@ -62,4 +81,3 @@ void changeSpeed(Motor& motor, int speed) {
 void updateMotorPower(Motor& motor) {
     analogWrite(motor.pwm, motor.currentPower);
 }
-

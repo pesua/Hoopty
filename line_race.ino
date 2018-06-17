@@ -4,7 +4,7 @@ const int RIGHT20 = 3;
 const int LEFT10 = 4;
 const int LEFT20 = 5;
 
-state = STRAIGHT;
+int state = STRAIGHT;
 
 void line_race() {
   
@@ -14,11 +14,11 @@ void line_race() {
       stright();
       
       refreshSensor(d3);
-      if (d3 == 1)
+      if (d3.lineDetected == 1)
         state = RIGHT10;
 
       refreshSensor(d5);
-      if (d5 == 1)
+      if (d5.lineDetected == 1)
         state = LEFT10;
     break;
 
@@ -26,11 +26,11 @@ void line_race() {
       left10();
 
       refreshSensor(d2);
-      if (d2 == 1)
+      if (d2.lineDetected == 1)
         state = RIGHT20;
 
       refreshSensor(d4);
-      if (d4 == 1)
+      if (d4.lineDetected == 1)
         state = STRAIGHT;
     break;
 
@@ -38,7 +38,7 @@ void line_race() {
       left20();
 
       refreshSensor(d3);
-      if (d3 == 1)
+      if (d3.lineDetected == 1)
         state = RIGHT10;
     break;
 
@@ -46,11 +46,11 @@ void line_race() {
       right10();
 
       refreshSensor(d6);
-      if (d6 == 1)
+      if (d6.lineDetected == 1)
         state = LEFT20;
 
       refreshSensor(d4);
-      if (d4 == 1)
+      if (d4.lineDetected == 1)
         state = STRAIGHT;
     break;
 
@@ -58,7 +58,7 @@ void line_race() {
        right20();
 
       refreshSensor(d5);
-      if (d5 == 1)
+      if (d5.lineDetected == 1)
         state = LEFT10;
 
 

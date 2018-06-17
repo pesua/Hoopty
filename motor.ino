@@ -12,9 +12,29 @@ void refreshMotor(Motor& motor) {
   }
 }
 
+void right10() {
+  changeSpeed(rightMotor, MOTOR_SPEED + 100);
+  changeSpeed(leftMotor, -MOTOR_SPEED + 70);
+}
+
+void right20() {
+  changeSpeed(rightMotor, MOTOR_SPEED + 150);
+  changeSpeed(leftMotor, -MOTOR_SPEED + 100);
+}
+
+void left10() {
+  changeSpeed(rightMotor, MOTOR_SPEED - 70);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 100);
+}
+
+void left20() {
+  changeSpeed(rightMotor, MOTOR_SPEED - 100);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 154);
+}
+
 void stright() {
-  changeSpeed(rightMotor, MOTOR_SPEED);
-  changeSpeed(leftMotor, -MOTOR_SPEED);
+  changeSpeed(rightMotor, MOTOR_SPEED +70);
+  changeSpeed(leftMotor, -MOTOR_SPEED - 70);
 }
 
 void reverse() {
@@ -52,7 +72,7 @@ void changeSpeed(Motor& motor, int speed) {
       digitalWrite(motor.counterClockwiseDir, HIGH);
     }
     
-    motor.currentPower = abs(speed);                         //было 150
+    motor.currentPower = abs(speed);                       
     motor.targetPower = min(abs(speed), 255);
     updateMotorPower(motor);
   }

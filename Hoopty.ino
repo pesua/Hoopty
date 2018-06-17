@@ -1,14 +1,6 @@
-const int MOTOR_SPEED = 240;
+const int MOTOR_SPEED = 100;
 const int SENSOR_TRESHOLD = 600; 
 const int SENSOR_TRIALS = 3;
-
-#define s1 A8 
-#define s2 A9 
-#define s3 A10 
-#define s4 A11
-#define s5 A12 
-#define s6 A13
-#define s7 A14
 
 struct Motor {
   // config
@@ -26,13 +18,14 @@ struct Sensor {
   // config
   int pin;
 
+
   // state
 //  int i = 0;
 //  int ringBuffer[SENSOR_TRIALS];
   
   int value;
-  boolean lineDetected = false;                   //было true
-  boolean stateChanged = false;                   //было true
+  boolean lineDetected = false;                   
+  boolean stateChanged = false;                   
 };
 
 struct Sonar {
@@ -47,9 +40,11 @@ Motor rightMotor;
 
 Sensor leftSensor;
 Sensor rightSensor;
-
-Sensor sensors[6];
-int sensorPins[] = {A13, A14, A10, A12, A8, A9};
+  Sensor d2;
+  Sensor d3;
+  Sensor d4;
+  Sensor d5;
+  Sensor d6;
 
 Sonar sonar;
 
@@ -88,35 +83,55 @@ void setupMotors() {
 
 
 void setupSensors() {
-  leftSensor.pin = s1;             
-  rightSensor.pin = s2;     
-  for(int i = 0; i < 6; i++){
-    sensors[i].pin = sensorPins[i];
-  }
+  leftSensor.pin = A15;             
+  rightSensor.pin = A9;
+              d2.pin = A14; 
+              d3.pin = A11;
+              d4.pin = A12;
+              d5.pin = A13;
+              d6.pin = A10;
 }
 
-void refreshSensors(){
-  for(int i = 0; i < 6; i++){
-    refreshSensor(sensors[i]);
-  }
-}
-
-void loop() {
-//  refreshSensor(leftSensor);
+                                              void loop() {
+//  refreshSensor(leftSensor);                                              
+//  refreshSensor(d2);
+//  refreshSensor(d3);
+//  refreshSensor(d4);
+//  refreshSensor(d5);
+//  refreshSensor(d6);
 //  refreshSensor(rightSensor);
-
-  refreshSensors();
+//
+//  Serial.print(" leftSensor = ");
+//  Serial.print(leftSensor.value);
+//  Serial.print(" d2 = ");
+//  Serial.print(d2.value);
+//  Serial.print(" d3 = ");
+//  Serial.print(d3.value);
+//  Serial.print(" d4 = ");
+//  Serial.print(d4.value);
+//  Serial.print(" d5 = ");
+//  Serial.print(d5.value);
+//  Serial.print(" d6 = ");
+//  Serial.print(d6.value);
+//  Serial.print(" rightSensor = ");
+//  Serial.println(rightSensor.value);
   
-  for(int i = 0; i < 6; i++){
-    Serial.print(sensors[i].value);
-    Serial.print(" --- ");
-  }  
-  Serial.println(" ");
-//  stright();
-//  strategy();
+ // strategy();
+
+ stright();
+ delay(400);
+ 
+ while(1)
+ {
+   line_race();
+ //stright();
+// delay(3000);
+// right20();
 
 //  refreshMotor(leftMotor);
 //  refreshMotor(rightMotor);
+ }
+
 }
 
 void refreshSensor(Sensor& sensor) {

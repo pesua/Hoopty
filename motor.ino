@@ -12,6 +12,14 @@ void refreshMotor(Motor& motor) {
   }
 }
 
+void setSpeed(double leftM, double rightM){  
+  changeSpeed(rightMotor, MOTOR_SPEED * rightM);
+  changeSpeed(leftMotor, -MOTOR_SPEED * leftM);
+  
+  Serial.print(leftM);
+  Serial.print(' ');
+  Serial.println(rightM);
+}
 void right10() {
   changeSpeed(rightMotor, MOTOR_SPEED + 100);
   changeSpeed(leftMotor, -MOTOR_SPEED + 70);

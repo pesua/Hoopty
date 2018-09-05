@@ -15,13 +15,7 @@ struct Motor {
 };
 
 struct Sensor {
-  // config
   int pin;
-
-
-  // state
-//  int i = 0;
-//  int ringBuffer[SENSOR_TRIALS];
   
   int value;
   boolean lineDetected = false;                   
@@ -56,6 +50,8 @@ void setup() {
   delay(4500); 
 
   Serial.begin(9600);
+  Serial2.begin(38400);
+  Serial2.println("AT+NAMEHOOPTY");
 }
 
 void setupSonar() {
@@ -92,87 +88,33 @@ void setupSensors() {
               d6.pin = A10;
 }
 
-                                              void loop() {
-//  refreshSensor(leftSensor);                                              
-//  refreshSensor(d2);
-//  refreshSensor(d3);
-//  refreshSensor(d4);
-//  refreshSensor(d5);
-//  refreshSensor(d6);
-//  refreshSensor(rightSensor);
-//
-//  Serial.print(" leftSensor = ");
-//  Serial.print(leftSensor.value);
-//  Serial.print(" d2 = ");
-//  Serial.print(d2.value);
-//  Serial.print(" d3 = ");
-//  Serial.print(d3.value);
-//  Serial.print(" d4 = ");
-//  Serial.print(d4.value);
-//  Serial.print(" d5 = ");
-//  Serial.print(d5.value);
-//  Serial.print(" d6 = ");
-//  Serial.print(d6.value);
-//  Serial.print(" rightSensor = ");
-//  Serial.println(rightSensor.value);
+void loop() {
   
- // strategy();
+  int command = -1;
+  while(Serial2.available())
+    command = Serial2.read();
+  double turnFactor = 0.5;
+  switch(command){
+    case -1: break;
+    case '1': setSpeed(1, 1); break;
+    case '2': setSpeed(turnFactor, 1); break;
+    case '3': setSpeed(-turnFactor, turnFactor); break;
+    case '4': setSpeed(-turnFactor, -1); break;
+    case '5': setSpeed(-turnFactor, -turnFactor); break;
+    case '6': setSpeed(-1, -turnFactor); break;
+    case '7': setSpeed(turnFactor, -turnFactor); break;
+    case '8': setSpeed(1, turnFactor); break;
+    default: setSpeed(0,0);
+  }
 
- stright();
- delay(400);
- 
- while(1)
- {
-   line_race();
- //stright();
-// delay(3000);
-// right20();
-
-//  refreshMotor(leftMotor);
-//  refreshMotor(rightMotor);
- }
+  delay(50);
 
 }
 
 void refreshSensor(Sensor& sensor) {
   sensor.value = analogRead(sensor.pin);
-
-//  sensor.ringBuffer[sensor.i] = analogRead(sensor.pin);
-//  sensor.i = (sensor.i + 1) % SENSOR_TRIALS;
-//
-//  sensor.value = 0;
-//  for (int i  = 0; i < SENSOR_TRIALS; i++) {
-//    sensor.value += sensor.ringBuffer[i];
-//  }
-//  sensor.value = sensor.value / SENSOR_TRIALS;
-  
-  
   boolean newState = sensor.value > SENSOR_TRESHOLD;   
   sensor.stateChanged = sensor.lineDetected ^ newState;
   sensor.lineDetected = newState;
     
 }
-
-
-//  if (leftSensor.stateChanged || rightSensor.stateChanged) {
-//
-//    if (leftSensor.lineDetected && rightSensor.lineDetected) {
-//      stop();
-//    } else if (rightSensor.lineDetected) {
-//      stop();
-////      turnLeft();
-//    } else if (leftSensor.lineDetected) {
-//      stop();
-////      turnRight();
-//    } else {
-////      stright();
-//
-//      if (sonar.distance < 110) {
-//    
-//        stright();
-//      } else {
-//        
-//        turnLeft();
-//      }
-//    }  
-//  }

@@ -1,2 +1,2 @@
 # Hoopty
-Firmware for sumo robot
+Firmware for line race robot
